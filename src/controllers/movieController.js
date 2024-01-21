@@ -14,6 +14,10 @@ router.post('/create', (req, res) => {
 router.get('/movies/:movieId', (req, res) => {
     const movieId = req.params.movieId;
     const currentMovie = movieService.getOne(movieId);
+    currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
+
+
+    // currentMovie.ratingStars = '&#x2605;'.repeat(currentMovie.rating);
 
     res.render('details', { movie: currentMovie });
 });
