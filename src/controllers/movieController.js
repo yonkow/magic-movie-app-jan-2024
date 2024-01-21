@@ -16,10 +16,13 @@ router.get('/movies/:movieId', (req, res) => {
     const currentMovie = movieService.getOne(movieId);
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
-
-    // currentMovie.ratingStars = '&#x2605;'.repeat(currentMovie.rating);
-
     res.render('details', { movie: currentMovie });
+});
+
+router.get('/search', (req, res) => {
+    const movies = movieService.getAll();
+
+    res.render('search', {movies});
 });
 
 module.exports = router;
