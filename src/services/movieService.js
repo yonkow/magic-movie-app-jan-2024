@@ -44,6 +44,24 @@ exports.getOne = (movieId) => {
     return movie;
 };
 
+exports.search = (title, genre, year) => {
+    let moviesResult = movies.slice();
+
+    if(title) {
+        moviesResult = moviesResult.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
+    };
+
+    if(genre) {
+        moviesResult = moviesResult.filter(movie => movie.genre.toLowerCase() === genre.toLowerCase());
+    };
+
+    if(year) {
+        moviesResult = moviesResult.filter(movie => movie.year === year);
+    };
+
+    return moviesResult;
+}
+
 exports.create = (movieData) => {
     movieData._id = movies[movies.length - 1]._id + 1;
     movies.push(movieData);
