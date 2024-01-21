@@ -7,7 +7,6 @@ router.get('/create', (req, res) => {
 
 router.post('/create', (req, res) => {
     const newMovie = req.body;
-
     movieService.create(newMovie);
     res.send('Movie should be created');
 });
