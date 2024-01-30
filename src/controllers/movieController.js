@@ -38,13 +38,21 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/movies/:movieId/attach', async (req, res) => {
-
     const movieId = req.params.movieId;
 
     const movie = await movieService.getOne(movieId).lean();
     const casts = await castService.getAll().lean();
     // TODO: remove already added cast
     res.render('movie/attach', { ...movie, casts });
+});
+
+router.post('/movies/:movieId/attach', async (req, res) => {
+    const castId = req.body.cast;
+    const movieId = req.params.movieId
+    
+    await movieService.attach(req.params.movieId, castId);
+
+    res.redirect(`/movies/${movieId}/attach`);
 });
 
 module.exports = router;
