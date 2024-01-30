@@ -5,8 +5,8 @@ exports.getAll = () => Movie.find();
 exports.getOne = (movieId) => Movie.findById(movieId);
 
 // TODO: Filter result in mongoDB
-exports.search = async (title, genre, year) => {
-    let moviesResult = await Movie.find().lean();
+exports.search = (title, genre, year) => {
+    let moviesResult = Movie.find();
 
     if(title) {
         moviesResult = moviesResult.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
