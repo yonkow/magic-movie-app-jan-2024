@@ -12,12 +12,11 @@ router.post('/create', async (req, res) => {
         await movieService.create(newMovie);
 
         res.redirect('/');
-    } catch(err) {
+    } catch (err) {
         console.error(err.message);
 
         res.redirect('/create');
-    };
-    
+    }
 });
 
 router.get('/movies/:movieId', async (req, res) => {
@@ -31,12 +30,14 @@ router.get('/movies/:movieId', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-    const {title, genre, year} = req.query;
+    const { title, genre, year } = req.query;
     const movieResult = await movieService.search(title, genre, year).lean();
 
-    res.render('search', {movies: movieResult, title, genre, year});
+    res.render('search', { movies: movieResult, title, genre, year });
 });
 
-
+router.get('/movies/:movieId/attach', (req, res) => {
+    res.render('movie/attach');
+});
 
 module.exports = router;
