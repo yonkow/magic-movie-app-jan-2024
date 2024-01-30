@@ -20,9 +20,11 @@ router.post('/create', async (req, res) => {
     
 });
 
-router.get('/movies/:movieId', (req, res) => {
+router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
-    const currentMovie = movieService.getOne(movieId);
+    const currentMovie = await movieService.getOne(movieId).lean();
+
+    // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
     res.render('details', { movie: currentMovie });
