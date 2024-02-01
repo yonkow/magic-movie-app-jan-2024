@@ -9,19 +9,22 @@ exports.search = (title, genre, year) => {
     let moviesResult = Movie.find();
 
     if (title) {
-        moviesResult = moviesResult.filter((movie) =>
-            movie.title.toLowerCase().includes(title.toLowerCase())
-        );
+        // moviesResult = moviesResult.filter((movie) =>
+        //     movie.title.toLowerCase().includes(title.toLowerCase())
+        // );
+        moviesResult = moviesResult.find({ title: new RegExp(title, 'i') });
     }
 
     if (genre) {
-        moviesResult = moviesResult.filter(
-            (movie) => movie.genre.toLowerCase() === genre.toLowerCase()
-        );
+        // moviesResult = moviesResult.filter(
+        //     (movie) => movie.genre.toLowerCase() === genre.toLowerCase()
+        // );
+        moviesResult = moviesResult.find({ genre });
     }
 
     if (year) {
-        moviesResult = moviesResult.filter((movie) => movie.year === year);
+        // moviesResult = moviesResult.filter((movie) => movie.year === year);
+        moviesResult = moviesResult.find({ year });
     }
 
     return moviesResult;

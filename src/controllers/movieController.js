@@ -25,7 +25,7 @@ router.get('/movies/:movieId', async (req, res) => {
     const currentMovie = await movieService.getOne(movieId).lean();
     if (!currentMovie) {
         return res.redirect('/404');
-    };
+    }
 
     // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
