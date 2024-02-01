@@ -2,7 +2,7 @@ const Movie = require('../models/movie');
 
 exports.getAll = () => Movie.find();
 
-exports.getOne = (movieId) => Movie.findById(movieId);
+exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
 
 // TODO: Filter result in mongoDB
 exports.search = (title, genre, year) => {

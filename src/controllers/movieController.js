@@ -23,12 +23,14 @@ router.post('/create', async (req, res) => {
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const currentMovie = await movieService.getOne(movieId).lean();
-    const casts = await castService.currentCast(currentMovie.casts).lean();
+    if (!currentMovie) {
+        return res.redirect('/404');
+    };
 
     // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
-    res.render('details', { movie: currentMovie, casts });
+    res.render('details', { movie: currentMovie });
 });
 
 router.get('/search', async (req, res) => {

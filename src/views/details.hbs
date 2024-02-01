@@ -29,10 +29,10 @@
     {{/with}}
 
     <div class="main-cast-card">
-        {{#each casts}}
+        {{#each movie.casts}}
             <div class="cast-card">
                 <div class="card-img">
-                    <img src="{{castImage}}" alt="cast" />
+                    <img src="{{castImage}}" alt="{{name}}" />
                 </div>
                 <div class="cast-info">
                     <h1>{{name}}</h1>
@@ -41,6 +41,8 @@
                     <h3>Name in Movie: {{nameInMovie}}</h3>
                 </div>
             </div>
+        {{else}}
+        <h2>No casts yet...</h2>
         {{/each}}
     </div>
 </section>
