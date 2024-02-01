@@ -3,3 +3,5 @@ const Cast = require('../models/Cast');
 exports.create = (castData) => Cast.create(castData);
 
 exports.getAll = () => Cast.find();
+
+exports.currentCast = (castId) => Cast.find({ _id: castId });

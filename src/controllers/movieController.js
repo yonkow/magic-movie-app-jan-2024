@@ -23,11 +23,12 @@ router.post('/create', async (req, res) => {
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const currentMovie = await movieService.getOne(movieId).lean();
+    const casts = await castService.currentCast(currentMovie.casts).lean();
 
     // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
-    res.render('details', { movie: currentMovie });
+    res.render('details', { movie: currentMovie, casts });
 });
 
 router.get('/search', async (req, res) => {
@@ -48,8 +49,8 @@ router.get('/movies/:movieId/attach', async (req, res) => {
 
 router.post('/movies/:movieId/attach', async (req, res) => {
     const castId = req.body.cast;
-    const movieId = req.params.movieId
-    
+    const movieId = req.params.movieId;
+
     await movieService.attach(req.params.movieId, castId);
 
     res.redirect(`/movies/${movieId}/attach`);
