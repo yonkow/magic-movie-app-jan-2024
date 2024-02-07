@@ -1,50 +1,52 @@
 <section id="details-page">
 
-    {{#with movie}}
-        <div class="main_card">
-            <div class="card_left">
-                <div class="card_datails">
+    <div class="main_card">
+        <div class="card_left">
+            {{#with movie}}
+            <div class="card_datails">
 
-                    <h1>{{title}}</h1>
-                    <div class="card-movie">
-                        <div class="first-info">
-                            <p class="card-genre">Genre: {{genre}}</p>
-                            <p class="card-director">Directror: {{director}}</p>
-                        </div>
-                        <div class="second-info">
-                            <p class="card-year">Year: {{year}}</p>
-                            <p class="card-ranking">Rating: <span id="stars">{{#each rating}} &#x2605; {{/each}}</span></p>
-                        </div>
-
+                <h1>{{title}}</h1>
+                <div class="card-movie">
+                    <div class="first-info">
+                        <p class="card-genre">Genre: {{genre}}</p>
+                        <p class="card-director">Directror: {{director}}</p>
+                    </div>
+                    <div class="second-info">
+                        <p class="card-year">Year: {{year}}</p>
+                        <p class="card-ranking">Rating: <span id="stars">{{#each rating}} &#x2605; {{/each}}</span></p>
                     </div>
 
+                </div>
 
-                    <p class="disc">Description: {{description}}</p>
-                </div>
-                <div class="details-btn">
-                    <a href="/movie/{{_id}}/edit" id="edit-button">Edit</a>
-                    <a href="/movie/{{_id}}/delete" id="delete-button">Delete</a>
-                </div>
+
+                <p class="disc">Description: {{description}}</p>
             </div>
-            <div class="card_right">
-                <img src="{{imageUrl}}" alt="image">
+            {{/with}}
+            {{#if isOwner}}
+            <div class="details-btn">
+                <a href="/movie/{{_id}}/edit" id="edit-button">Edit</a>
+                <a href="/movie/{{_id}}/delete" id="delete-button">Delete</a>
             </div>
+            {{/if}}
         </div>
-    {{/with}}
+        <div class="card_right">
+            <img src="{{movie.imageUrl}}" alt="image">
+        </div>
+    </div>
 
     <div class="main-cast-card">
         {{#each movie.casts}}
-            <div class="cast-card">
-                <div class="card-img">
-                    <img src="{{castImage}}" alt="{{name}}" />
-                </div>
-                <div class="cast-info">
-                    <h1>{{name}}</h1>
-                    <h3>Age: {{age}}</h3>
-                    <h3>Born: {{born}}</h3>
-                    <h3>Name in Movie: {{nameInMovie}}</h3>
-                </div>
+        <div class="cast-card">
+            <div class="card-img">
+                <img src="{{castImage}}" alt="{{name}}" />
             </div>
+            <div class="cast-info">
+                <h1>{{name}}</h1>
+                <h3>Age: {{age}}</h3>
+                <h3>Born: {{born}}</h3>
+                <h3>Name in Movie: {{nameInMovie}}</h3>
+            </div>
+        </div>
         {{else}}
         <div class="no-cast">
             <p>There are no casts added yet...</p>

@@ -9,7 +9,10 @@ router.get('/create', isAuth, (req, res) => {
 });
 
 router.post('/create', isAuth, async (req, res) => {
-    const newMovie = req.body;
+    const newMovie = {
+        ...req.body,
+        owner: req.user._id,
+    };
 
     try {
         await movieService.create(newMovie);
@@ -32,6 +35,9 @@ router.get('/search', async (req, res) => {
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const currentMovie = await movieService.getOne(movieId).lean();
+    const isOwner = currentMovie.owner == req.user._id;
+    console.log(isOwner)
+
     if (!currentMovie) {
         return res.redirect('/404');
     }
@@ -39,7 +45,7 @@ router.get('/movies/:movieId', async (req, res) => {
     // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
-    res.render('/movie/details', { movie: currentMovie });
+    res.render('movie/details', { movie: currentMovie, isOwner: isOwner });
 });
 
 router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
