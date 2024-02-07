@@ -36,7 +36,6 @@ router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const currentMovie = await movieService.getOne(movieId).lean();
     const isOwner = currentMovie.owner == req.user._id;
-    console.log(isOwner)
 
     if (!currentMovie) {
         return res.redirect('/404');
@@ -45,7 +44,7 @@ router.get('/movies/:movieId', async (req, res) => {
     // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
-    res.render('movie/details', { movie: currentMovie, isOwner: isOwner });
+    res.render('movie/details', { movie: currentMovie, isOwner });
 });
 
 router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
