@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const bc = require('bcrypt');
 const authService = require('../services/authService');
 
 router.get('/register', (req, res) => {
@@ -8,10 +7,6 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     const regData = req.body;
-
-    const hash = await bc.hash(req.body.password, 12);
-
-    regData.password = hash;
 
     try {
         await authService.register(regData);
