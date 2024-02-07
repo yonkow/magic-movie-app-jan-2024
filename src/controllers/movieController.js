@@ -20,6 +20,13 @@ router.post('/create', async (req, res) => {
     }
 });
 
+router.get('/search', async (req, res) => {
+    const { title, genre, year } = req.query;
+    const movieResult = await movieService.search(title, genre, year).lean();
+
+    res.render('search', { movies: movieResult, title, genre, year });
+});
+
 router.get('/movies/:movieId', async (req, res) => {
     const movieId = req.params.movieId;
     const currentMovie = await movieService.getOne(movieId).lean();
@@ -31,13 +38,6 @@ router.get('/movies/:movieId', async (req, res) => {
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
     res.render('details', { movie: currentMovie });
-});
-
-router.get('/search', async (req, res) => {
-    const { title, genre, year } = req.query;
-    const movieResult = await movieService.search(title, genre, year).lean();
-
-    res.render('search', { movies: movieResult, title, genre, year });
 });
 
 router.get('/movies/:movieId/attach', async (req, res) => {
@@ -58,4 +58,11 @@ router.post('/movies/:movieId/attach', async (req, res) => {
     res.redirect(`/movies/${movieId}/attach`);
 });
 
+router.get('/movie/:movieId/edit', async (req, res) => {
+
+    const movie = await movieService.getOne(req.params.movieId).lean();
+
+    res.render('movie/edit', { movie });
+});
+ 
 module.exports = router;
