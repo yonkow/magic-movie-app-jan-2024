@@ -39,7 +39,7 @@ router.get('/movies/:movieId', async (req, res) => {
     // TODO: This is not perfect, use handlebars helpers
     currentMovie.rating = new Array(Number(currentMovie.rating)).fill(true);
 
-    res.render('details', { movie: currentMovie });
+    res.render('/movie/details', { movie: currentMovie });
 });
 
 router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
