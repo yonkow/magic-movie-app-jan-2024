@@ -65,7 +65,7 @@ router.post('/movies/:movieId/attach', isAuth, async (req, res) => {
     res.redirect(`/movies/${movieId}/attach`);
 });
 
-router.get('/movie/:movieId/edit', isAuth, async (req, res) => {
+router.get('/movies/:movieId/edit', isAuth, async (req, res) => {
 
     if (!req.user) {
         return res.redirect('/auth/login')
@@ -76,12 +76,20 @@ router.get('/movie/:movieId/edit', isAuth, async (req, res) => {
     res.render('movie/edit', { movie });
 });
 
-router.post('/movie/:movieId/edit', isAuth, async (req, res) => {
+router.post('/movies/:movieId/edit', isAuth, async (req, res) => {
     const movieDetails = req.body;
 
     await movieService.edit(req.params.movieId, movieDetails);
 
     res.redirect('/');
+});
+
+router.get('/movies/:movieId/delete', isAuth, async (req, res) => {
+    const movieId = req.params.movieId;
+
+    await movieService.delete(movieId);
+
+    res.redirect('/');
 })
- 
+
 module.exports = router;
