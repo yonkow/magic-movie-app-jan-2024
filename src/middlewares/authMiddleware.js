@@ -32,3 +32,11 @@ exports.isAuth = (req, res, next) => {
 
     next();
 }
+
+exports.isLoggedIn = (req, res, next) => {
+    if(!req.user) {
+        return next();
+    };
+
+    res.redirect('/');
+}
