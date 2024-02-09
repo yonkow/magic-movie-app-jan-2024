@@ -4,20 +4,26 @@ const castSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        match: [/\w.+/, 'Name should be alphanumerical and could includes spaces.'],
+        minLength: [5, 'Name is too short']
     },
     age: {
         type: Number,
         required: true,
-        min: 3,
+        min: 1,
         max: 120,
     },
     born: {
         type: String,
         required: true,
+        match: [/\w.+/, 'Born field should be alphanumerical and could includes spaces.'],
+        minLength: [3, 'Born field is too short'],
     },
     nameInMovie: {
         type: String,
         required: true,
+        match: [/\w.+/, 'Name should be alphanumerical and could includes spaces.'],
+        minLength: [5, 'Name is too short']
     },
     castImage: {
         type: String,
