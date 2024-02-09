@@ -3,9 +3,10 @@ const movieService = require('../services/movieService');
 const castService = require('../services/castService');
 
 const { isAuth } = require('../middlewares/authMiddleware');
+const { errorMessage } = require('../utils/errorUtil');
 
 router.get('/create', isAuth, (req, res) => {
-    res.render('create');
+    res.render('movie/create');
 });
 
 router.post('/create', isAuth, async (req, res) => {
@@ -19,17 +20,24 @@ router.post('/create', isAuth, async (req, res) => {
 
         res.redirect('/');
     } catch (err) {
-        console.error(err.message);
 
-        res.redirect('/create');
+        res.render('movie/create', { ...newMovie, error: errorMessage(err)});
     }
 });
 
 router.get('/search', async (req, res) => {
     const { title, genre, year } = req.query;
-    const movieResult = await movieService.search(title, genre, year).lean();
 
-    res.render('search', { movies: movieResult, title, genre, year });
+    try {
+        const movieResult = await movieService.search(title, genre, year).lean();
+
+        res.render('search', { movies: movieResult, title, genre, year });
+    } catch (err) {
+        if(err) {
+            res.redirect('/404');
+        };
+    }
+
 });
 
 router.get('/movies/:movieId', async (req, res) => {
@@ -51,7 +59,7 @@ router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
 
     const movie = await movieService.getOne(movieId).lean();
-    const casts = await castService.getAll().lean();
+    const casts = await castService.getAll(movieId).lean();
     // TODO: remove already added cast
     res.render('movie/attach', { ...movie, casts });
 });

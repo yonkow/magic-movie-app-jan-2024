@@ -37,6 +37,10 @@ exports.attach = async (movieId, castId) => {
 
     const movie = await this.getOne(movieId);
 
+    if(movie.casts.includes(castId)) {
+        throw new Error('The cast has already added in this movie.')
+    }
+
     //TODO: vlaidate castId is exists
     //TODO: validate if cast is already added
     movie.casts.push(castId);
