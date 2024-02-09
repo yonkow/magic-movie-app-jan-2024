@@ -10,8 +10,8 @@ const castSchema = new mongoose.Schema({
     age: {
         type: Number,
         required: true,
-        min: 1,
-        max: 120,
+        min: [1, 'Age must be between 1 and 120 years.'],
+        max: [120, 'Age must be between 1 and 120 years.'],
     },
     born: {
         type: String,
